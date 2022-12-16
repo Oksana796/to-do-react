@@ -3,45 +3,39 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [toDoList, setToDoList] = useState([]);
   const [newTask, setNewTask] = useState("");
-  const [list, setList] = useState([]);
 
-  const handleChangeTask = (e) => {
+  const handleChange = (e) => {
     setNewTask(e.target.value);
   };
 
   const addTask = () => {
     const task = {
-      id: list === 0 ? 1 : [list.length - 1].id + 1,
-      taskName: newTask,
+      id: toDoList.length === 0 ? 1 : toDoList[toDoList.length - 1].id + 1,
+      name: newTask,
     };
-    setList(task.taskName !== "" ? [...list, task] : list);
+    setToDoList([...toDoList, task]);
+  };
+
+  const deleteTask = (id) => {
+    setToDoList(toDoList.filter((task) => task.id !== id));
   };
 
   return (
     <div className="App">
       <div className="addTaskDiv">
-        <input
-          type="text"
-          placeholder="any task"
-          className="typeTask"
-          onChange={handleChangeTask}
-          value={newTask}
-        />
-        <button className="addTaskBtn" onClick={addTask}>
-          Add
-        </button>
+        <input onChange={handleChange} type="text" placeholder="add task" />
+        <button onClick={addTask}>Add Task</button>
       </div>
       <div className="listDiv">
-        {list.map((task) => {
-          return (
-            <div className="task">
-              <h2>{task.taskName}</h2>
-              <button>Complete</button>
-              <button>X</button>
-            </div>
-          );
-        })}
+        {toDoList.map((task) => (
+          <div>
+            <h2>{task.name}</h2>
+            <button>Complete</button>
+            <button onClick={() => deleteTask(task.id)}>X</button>
+          </div>
+        ))}
       </div>
     </div>
   );
