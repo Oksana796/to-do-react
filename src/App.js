@@ -39,8 +39,8 @@ function App() {
   return (
     <div className="App">
       <div className="addTaskDiv">
-        <input onChange={handleChange} type="text" placeholder="add task" />
-        <button onClick={addTask}>Add Task</button>
+        <input onChange={handleChange} type="text" placeholder="Add task" maxLength={30} />
+        <button onClick={addTask}>Add </button>
       </div>
       <div className="listDiv">
         {toDoList.map((task) => {
